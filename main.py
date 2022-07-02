@@ -101,6 +101,10 @@ class mainWindow(QMainWindow):
         red_pixmap = QPixmap(40, 40)
         red_pixmap.fill(QColor("red"))
         red_icon = QIcon(red_pixmap)
+        # This is a blue icon
+        blue_pixmap = QPixmap(40, 40)
+        blue_pixmap.fill(QColor("blue"))
+        blue_icon = QIcon(blue_pixmap)
 
         # Attach the new icon to the red action.  The
         # text for the action is pulled to actually set the
@@ -109,6 +113,13 @@ class mainWindow(QMainWindow):
         red_action.setIcon(red_icon)
         tb.addAction(red_action)
         red_action.triggered.connect(self.color_action)
+
+        # Blue action
+        blue_action = QAction(blue_icon, "blue", self)
+        blue_action.setIcon(blue_icon)
+        tb.addSeparator()
+        tb.addAction(blue_action)
+        blue_action.triggered.connect(self.color_action)
 
         # Create an empty QWidget to fill out the space so the
         # coordinates show on the right
