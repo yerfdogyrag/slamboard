@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8101da1e-ddb0-4dee-9fa4-23bf13125974" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TODO.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/slamboard.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/slamboard.iml" afterDir="false" />
+    <list default="true" id="8101da1e-ddb0-4dee-9fa4-23bf13125974" name="Changes" comment="A few tweaks (toolbar, exit, color)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TODO.txt" beforeDir="false" afterPath="$PROJECT_DIR$/TODO.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -97,8 +93,16 @@
       <workItem from="1656727390636" duration="60000" />
       <workItem from="1656727515494" duration="304000" />
       <workItem from="1656729211613" duration="185000" />
-      <workItem from="1656729435515" duration="11050000" />
+      <workItem from="1656729435515" duration="14279000" />
     </task>
+    <task id="LOCAL-00001" summary="A few tweaks (toolbar, exit, color)">
+      <created>1656773054427</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1656773054427</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -115,7 +119,11 @@
       </map>
     </option>
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="A few tweaks (toolbar, exit, color)" />
+    <option name="LAST_COMMIT_MESSAGE" value="A few tweaks (toolbar, exit, color)" />
+  </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/slamboard$main.coverage" NAME="main Coverage Results" MODIFIED="1656769985065" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/slamboard$main.coverage" NAME="main Coverage Results" MODIFIED="1656776163385" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

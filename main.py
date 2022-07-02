@@ -2,9 +2,10 @@
 import sys
 from typing import Optional
 
-from PyQt5.QtGui import QPixmap, QColor, QIcon
+from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QPixmap, QColor, QIcon, QPen
 from PyQt5.QtWidgets import (QApplication, QGraphicsView, QGraphicsScene, QGraphicsRectItem, QGraphicsTextItem,
-                             QMainWindow, qApp, QAction, QStyle, QLabel, QWidget, QSizePolicy)
+                             QMainWindow, QAction, QStyle, QLabel, QWidget, QSizePolicy, qApp)
 
 
 # Create Objects class that defines the position property of
@@ -15,6 +16,8 @@ class SlamBoard(QGraphicsView):
         super().__init__()
         self.scene = None
         self.rect: Optional[QGraphicsRectItem] = None
+        self.rect_width = 1
+        self.rect_color = "black"
         self.initializeView()
         self.parent = parent
 
@@ -24,16 +27,38 @@ class SlamBoard(QGraphicsView):
         to the screen.
         """
         self.setGeometry(100, 100, 1700, 1450)
-        # self.createObjects()
         self.setMouseTracking(True)
         self.createScene()
         self.show()
 
     def mouseMoveEvent(self, event):
         pos = event.pos()
-        self.rect.setX(pos.x())
-        self.rect.setY(pos.y())
+        # Convert coordinates to scene
+        new_pos = self.mapToScene(pos)
+        x, y = new_pos.x(), new_pos.y()
+        self.parent.update_coords(x, y)
+        self.rect.setX(x)
+        self.rect.setY(y)
         # print(pos.x(), pos.y())
+
+    def update_rect_pen(self):
+        pen = QPen(QColor(self.rect_color))
+        pen.setWidth(self.rect_width)
+        self.rect.setPen(pen)
+
+    def keyPressEvent(self, event):
+        key = event.key()
+        if key == Qt.Key_W:
+            self.rect_width += 1
+            if self.rect_width > 10:
+                self.rect_width = 1
+            self.update_rect_pen()
+
+        print("Key:", event.key())
+
+    def color_action(self, color):
+        self.rect_color = color
+        self.update_rect_pen()
 
     def createScene(self):
         """
@@ -64,18 +89,22 @@ class mainWindow(QMainWindow):
         # Create exit button from standard icon
         exit_pixmap = getattr(QStyle, "SP_DialogCancelButton")
         exit_icon = self.style().standardIcon(exit_pixmap)
-        exit_action = QAction(exit_icon, "red", self)
+        exit_action = QAction(exit_icon, "exit", self)
         exit_action.setIcon(exit_icon)
         tb.addAction(exit_action)
-        exit_action.triggered.connect(qApp.quit)
+        exit_action.triggered.connect(qApp.exit)
 
         tb.addSeparator()
 
         # Create some color icons to make them easy to select
+        # First, create a red Icon
         red_pixmap = QPixmap(40, 40)
         red_pixmap.fill(QColor("red"))
         red_icon = QIcon(red_pixmap)
 
+        # Attach the new icon to the red action.  The
+        # text for the action is pulled to actually set the
+        # color.
         red_action = QAction(red_icon, "red", self)
         red_action.setIcon(red_icon)
         tb.addAction(red_action)
@@ -100,13 +129,14 @@ class mainWindow(QMainWindow):
         self.show()
 
     def update_coords(self, x, y):
-        self.labelx
+        self.label_x.setText(f"X: {x}")
+        self.label_y.setText(f"Y: {y}")
 
     def color_action(self):
         # who sent the signal
         target = self.sender()
         color = target.text()
-        print("Color:", color)
+        self.slamboard.color_action(color)
 
 
 if __name__ == '__main__':

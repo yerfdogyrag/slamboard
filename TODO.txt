@@ -23,11 +23,13 @@ Easy starting
 
 - Add additional colors (blue, green, yellow, black)
 
+- Force the X, Y coordinates on the top-left to be a fixed width.
+
 - Add a line-width pull-down
 
 - Holding down Z should zoom as mouse moves (Z to stop)
 
-Gary TODO
-- Get coordinate conversion working
+Gary Stuff
+X Get coordinate conversion working
 - Add keystroke and keystroke handler states
 
