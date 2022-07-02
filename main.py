@@ -53,7 +53,11 @@ class SlamBoard(QGraphicsView):
             if self.rect_width > 10:
                 self.rect_width = 1
             self.update_rect_pen()
-
+        if key == Qt.Key_S:
+            self.rect_width -= 1
+            if self.rect_width < 1:
+                self.rect_width = 10
+            self.update_rect_pen()
         print("Key:", event.key())
 
     def color_action(self, color):
