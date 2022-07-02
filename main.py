@@ -122,6 +122,7 @@ class mainWindow(QMainWindow):
 
         tb.addSeparator()
         tb.addWidget(self.label_x)
+        tb.addSeparator()
         tb.addWidget(self.label_y)
 
         self.setCentralWidget(self.slamboard)
