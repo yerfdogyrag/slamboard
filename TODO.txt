@@ -1,0 +1,33 @@
+
+Ideas:
+
+Feature ideas:
+- Boxes (B)
+  - Default mode is "selected"
+  - Coordinates are the center of the box
+  - In selected mode, mouse movements resize the box (it can be any of the 4 corners)
+  - SHIFT switches to box move
+  - C - allow color change
+  - W - change line width
+  - B - complete box, leaving in current location
+  - T - text mode (select from a list or just type.  Esc or Enter to exit?)
+
+- Arrow mode (a)
+  - Click to select first item (boxes likely), e changes edge, press a when done
+  - Click to select second item, e changes edge, press a
+  - W - change line width
+  - S - switch arrow style
+
+Easy starting
+- Shift - pan.  Should change mouse cursor type and will change the view setting.
+
+- Add additional colors (blue, green, yellow, black)
+
+- Add a line-width pull-down
+
+- Holding down Z should zoom as mouse moves (Z to stop)
+
+Gary TODO
+- Get coordinate conversion working
+- Add keystroke and keystroke handler states
+
