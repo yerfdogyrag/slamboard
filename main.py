@@ -2,14 +2,12 @@
 import sys
 from typing import Optional
 
-from PyQt5.QtCore import Qt
+from PyQt5 import QtWidgets
+from PyQt5.QtCore import Qt, QRectF
 from PyQt5.QtGui import QPixmap, QColor, QIcon, QPen
 from PyQt5.QtWidgets import (QApplication, QGraphicsView, QGraphicsScene, QGraphicsRectItem, QGraphicsTextItem,
                              QMainWindow, QAction, QStyle, QLabel, QWidget, QSizePolicy, qApp)
 
-
-# Create Objects class that defines the position property of
-# instances of the class using pyqtProperty.
 
 class SlamBoard(QGraphicsView):
     def __init__(self, parent):
@@ -19,6 +17,8 @@ class SlamBoard(QGraphicsView):
         self.rect_width = 1
         self.rect_color = "black"
         self.initializeView()
+        self.dragging = None
+        self.rect_save = None
         self.parent = parent
 
     def initializeView(self):
@@ -36,10 +36,44 @@ class SlamBoard(QGraphicsView):
         # Convert coordinates to scene
         new_pos = self.mapToScene(pos)
         x, y = new_pos.x(), new_pos.y()
+        modifiers = QtWidgets.QApplication.keyboardModifiers()
+        if modifiers & Qt.ShiftModifier:
+            if self.dragging is None:
+                # Save off the rectangle as absolute coordinates in the scene
+                off_x = self.rect.x()
+                off_y = self.rect.y()
+                self.rect_save = self.rect.rect().adjusted(off_x, off_y, off_x, off_y)
+
+            # We're dragging the upper left-hand corner around, leaving
+            # the bottom right in the same place.  This gets real funky
+            # when the coordinates go negative, so it's easiest to convert
+            # to x1,y1,x2,y2 rather than x,y,width,height
+            # The "normalize" function makes sure that x1 < x2 and y1 < y2
+            x1, y1, x2, y2 = self.rect_save.getCoords()
+            x1 = new_pos.x()
+            y1 = new_pos.y()
+            new_rect = QRectF()
+            new_rect.setCoords(x1, y1, x2, y2)
+            final_rect = new_rect.normalized()
+
+            # Note: the setX sets the rectangle's location in the scene space.  The actual
+            #       rectangle has an upper-left hand corner of 0,0 and so we're just adjusting
+            #       the location and the width/height.
+            self.rect.setX(final_rect.x())
+            self.rect.setY(final_rect.y())
+            self.rect.setRect(0, 0, final_rect.width(), final_rect.height())
+            # Set the width of children (assumed to be text)
+            width = final_rect.width()
+            for child in self.rect.childItems():
+                child.setTextWidth(width)
+
+        else:
+            self.dragging = None
+            self.rect.setX(x)
+            self.rect.setY(y)
+            # print(pos.x(), pos.y())
+        # Update labels at the upper right
         self.parent.update_coords(x, y)
-        self.rect.setX(x)
-        self.rect.setY(y)
-        # print(pos.x(), pos.y())
 
     def update_rect_pen(self):
         pen = QPen(QColor(self.rect_color))
@@ -63,7 +97,7 @@ class SlamBoard(QGraphicsView):
             self.rect.setParentItem(self.rect)
             self.scene.addItem(self.rect)
 
-        print("Key:", event.key())
+        # print("Key:", event.key())
 
     def color_action(self, color):
         self.rect_color = color
